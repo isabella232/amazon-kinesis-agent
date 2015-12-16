@@ -112,7 +112,7 @@ public final class ByteBuffers {
           return buffer;
         }
         int len = buffer.remaining() + bytes.length;
-        ByteBuffer copy = ByteBuffer.allocate(len).put(buffer).put(bytes);
+        ByteBuffer copy = ByteBuffer.allocate(len).put(bytes).put(buffer);
         copy.flip();
         return copy;
     }

@@ -109,7 +109,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
 
         String metadataStr = readString("metadata", null);
         if (metadataStr != null) {
-            String tmp = " " + metadataStr;
+            String tmp = metadataStr + ">";
             metadata = tmp.getBytes(StandardCharsets.UTF_8);
         } else {
             metadata = null;

@@ -14,6 +14,7 @@
 package com.amazon.kinesis.streaming.agent.tailing;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 
@@ -21,6 +22,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import com.amazon.kinesis.streaming.agent.AgentContext;
+import com.amazon.kinesis.streaming.agent.ByteBuffers;
 import com.amazon.kinesis.streaming.agent.Constants;
 import com.amazon.kinesis.streaming.agent.config.Configuration;
 import com.amazon.kinesis.streaming.agent.config.ConfigurationException;

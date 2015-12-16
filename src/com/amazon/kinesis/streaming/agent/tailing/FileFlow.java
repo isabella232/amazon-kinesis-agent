@@ -105,11 +105,11 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
         }
         recordTerminatorBytes = terminatorConfig.getBytes(StandardCharsets.UTF_8);
 
-        String metadataStr = readString("metadata", null)
+        String metadataStr = readString("metadata", null);
         if (metadataStr != null) {
-            metadata = ByteBuffers.fromString(" " + metadataStr, StandardCharsets.UTF_8)
+            metadata = ByteBuffers.fromString(" " + metadataStr, StandardCharsets.UTF_8);
         } else {
-            metadata = null
+            metadata = null;
         }
     }
 

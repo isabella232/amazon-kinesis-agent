@@ -1,14 +1,14 @@
 /*
  * Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * 
+ *
  * Licensed under the Amazon Software License (the "License").
- * You may not use this file except in compliance with the License. 
+ * You may not use this file except in compliance with the License.
  * A copy of the License is located at
- * 
+ *
  *  http://aws.amazon.com/asl/
- *  
- * or in the "license" file accompanying this file. 
- * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ *
+ * or in the "license" file accompanying this file.
+ * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
 package com.amazon.kinesis.streaming.agent.tailing;
@@ -66,6 +66,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
     @Getter protected final long retryInitialBackoffMillis;
     @Getter protected final long retryMaxBackoffMillis;
     @Getter protected final int publishQueueCapacity;
+    @Getter protected final ByteBuffer metadata;
 
     protected FileFlow(AgentContext context, Configuration config) {
         super(config);
@@ -92,9 +93,9 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
         retryInitialBackoffMillis = readLong("retryInitialBackoffMillis", getDefaultRetryInitialBackoffMillis());
         retryMaxBackoffMillis = readLong("retryMaxBackoffMillis", getDefaultRetryMaxBackoffMillis());
         publishQueueCapacity = readInteger("publishQueueCapacity", getDefaultPublishQueueCapacity());
-        
+
         skipHeaderLines = readInteger("skipHeaderLines", 0);
-        
+
         String pattern = readString("multiLineStartPattern", null);
         recordSplitter = Strings.isNullOrEmpty(pattern) ? new SingleLineSplitter() : new RegexSplitter(pattern);
 
@@ -103,6 +104,13 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
             throw new ConfigurationException("Record terminator not specified or exceeds the maximum record size");
         }
         recordTerminatorBytes = terminatorConfig.getBytes(StandardCharsets.UTF_8);
+
+        String metadataStr = readString("metadata", null)
+        if (metadataStr != null) {
+            metadata = ByteBuffers.fromString(" " + metadataStr, StandardCharsets.UTF_8)
+        } else {
+            metadata = null
+        }
     }
 
     public synchronized FileTailer<R> createTailer(FileCheckpointStore checkpoints, ExecutorService sendingExecutor) throws IOException {

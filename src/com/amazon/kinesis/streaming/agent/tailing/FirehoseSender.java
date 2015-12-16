@@ -1,14 +1,14 @@
 /*
  * Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * 
+ *
  * Licensed under the Amazon Software License (the "License").
- * You may not use this file except in compliance with the License. 
+ * You may not use this file except in compliance with the License.
  * A copy of the License is located at
- * 
+ *
  *  http://aws.amazon.com/asl/
- *  
- * or in the "license" file accompanying this file. 
- * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ *
+ * or in the "license" file accompanying this file.
+ * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
 package com.amazon.kinesis.streaming.agent.tailing;
@@ -80,8 +80,10 @@ public class FirehoseSender extends AbstractSender<FirehoseRecord> {
             BufferSendResult<FirehoseRecord> sendResult = null;
             List<Record> requestRecords = new ArrayList<>();
             for(FirehoseRecord data : buffer) {
+                // this is lyft specific bit of logic to add metadata to log lines
+                ByteBuffer tmp = ByteBuffers.join(data.data(), data.file().flow().metadata())
                 Record record = new Record();
-                record.setData(data.data());
+                record.setData(tmp);
                 requestRecords.add(record);
             }
             PutRecordBatchRequest request = new PutRecordBatchRequest();

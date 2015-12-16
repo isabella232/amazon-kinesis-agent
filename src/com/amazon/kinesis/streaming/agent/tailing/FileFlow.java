@@ -68,7 +68,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
     @Getter protected final long retryInitialBackoffMillis;
     @Getter protected final long retryMaxBackoffMillis;
     @Getter protected final int publishQueueCapacity;
-    @Getter protected final ByteBuffer metadata;
+    @Getter public final ByteBuffer metadata;
 
     protected FileFlow(AgentContext context, Configuration config) {
         super(config);
@@ -133,10 +133,6 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
     public long maxTimeBetweenFileTrackerRefreshMillis() {
         return readLong(MAX_TIME_BETWEEN_FILE_TRACKER_REFRESH_MILLIS_KEY,
                 DEFAULT_MAX_TIME_BETWEEN_FILE_TRACKER_REFRESH_MILLIS);
-    }
-
-    public ByteBuffer getMetadata() {
-        return metadata;
     }
 
     public abstract String getId();

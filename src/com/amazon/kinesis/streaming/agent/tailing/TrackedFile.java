@@ -38,7 +38,7 @@ import com.google.common.base.Preconditions;
 @ToString(exclude={"channel", "flow"})
 public class TrackedFile {
     private static final Logger LOGGER = Logging.getLogger(TrackedFile.class);
-    @Getter protected final FileFlow<?> flow;
+    @Getter public final FileFlow<?> flow;
     @Getter protected final FileId id;
     @Getter protected final Path path;
 
@@ -80,10 +80,6 @@ public class TrackedFile {
 
     public long getRemainingBytes() throws IOException {
          return getSize() - getCurrentOffset();
-    }
-
-    public FileFlow<?> getFlow() {
-         return flow;
     }
 
     public void open(long offset) throws IOException {

@@ -107,12 +107,12 @@ public final class ByteBuffers {
         }
     }
 
-    public static ByteBuffer join(ByteBuffer buffer, ByteBuffer buffer2) {
+    public static ByteBuffer join(ByteBuffer buffer, byte[] bytes) {
         if (buffer2 == null) {
           return buffer;
         }
         int len = buffer.remaining() + buffer2.remaining();
-        ByteBuffer copy = ByteBuffer.allocate(len).put(buffer).put(buffer2);
+        ByteBuffer copy = ByteBuffer.allocate(len).put(buffer).put(bytes);
         copy.flip();
         return copy;
     }

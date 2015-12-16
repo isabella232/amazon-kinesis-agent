@@ -68,7 +68,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
     @Getter protected final long retryInitialBackoffMillis;
     @Getter protected final long retryMaxBackoffMillis;
     @Getter protected final int publishQueueCapacity;
-    @Getter public final ByteBuffer metadata;
+    @Getter public final byte[] metadata;
 
     protected FileFlow(AgentContext context, Configuration config) {
         super(config);
@@ -109,7 +109,8 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
 
         String metadataStr = readString("metadata", null);
         if (metadataStr != null) {
-            metadata = ByteBuffers.fromString(" " + metadataStr, StandardCharsets.UTF_8);
+            String tmp = " " + metadataStr;
+            metadata = tmp.getBytes(StandardCharsets.UTF_8);
         } else {
             metadata = null;
         }

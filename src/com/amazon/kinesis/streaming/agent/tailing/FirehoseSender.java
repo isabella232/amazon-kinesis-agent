@@ -81,7 +81,7 @@ public class FirehoseSender extends AbstractSender<FirehoseRecord> {
             List<Record> requestRecords = new ArrayList<>();
             for(FirehoseRecord data : buffer) {
                 // this is lyft specific bit of logic to add metadata to log lines
-                ByteBuffer tmp = ByteBuffers.join(data.data(), data.file().flow().metadata())
+                ByteBuffer tmp = ByteBuffers.join(data.data(), data.file().flow().metadata());
                 Record record = new Record();
                 record.setData(tmp);
                 requestRecords.add(record);

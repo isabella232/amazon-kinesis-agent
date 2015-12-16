@@ -112,7 +112,9 @@ public final class ByteBuffers {
           return buffer;
         }
         int len = buffer.remaining() + buffer2.remaining();
-        return ByteBuffer.allocate(len).put(buffer).put(buffer2);
+        ByteBuffer copy = ByteBuffer.allocate(len).put(buffer).put(buffer2);
+        copy.flip()
+        return copy
     }
 
     /**

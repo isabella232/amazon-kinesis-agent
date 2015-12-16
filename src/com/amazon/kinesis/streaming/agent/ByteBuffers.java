@@ -111,7 +111,7 @@ public final class ByteBuffers {
         if (buffer2 == null) {
           return buffer;
         }
-        int len = buffer.remaining() + buffer2.remaining();
+        int len = buffer.remaining() + bytes.length();
         ByteBuffer copy = ByteBuffer.allocate(len).put(buffer).put(bytes);
         copy.flip();
         return copy;

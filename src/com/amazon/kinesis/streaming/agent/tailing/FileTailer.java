@@ -1,14 +1,14 @@
 /*
  * Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * 
+ *
  * Licensed under the Amazon Software License (the "License").
- * You may not use this file except in compliance with the License. 
+ * You may not use this file except in compliance with the License.
  * A copy of the License is located at
- * 
+ *
  *  http://aws.amazon.com/asl/
- *  
- * or in the "license" file accompanying this file. 
- * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ *
+ * or in the "license" file accompanying this file.
+ * This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
 package com.amazon.kinesis.streaming.agent.tailing;
@@ -63,6 +63,7 @@ public class FileTailer<R extends IRecord> extends AbstractExecutionThreadServic
     private boolean isNewFile = false;
     protected final long minTimeBetweenFilePollsMillis;
     protected final long maxTimeBetweenFileTrackerRefreshMillis;
+    protected final int minRecordsProcessedBeforeSleep;
     private AbstractScheduledService metricsEmitter;
 
     private boolean isInitialized = false;
@@ -84,6 +85,7 @@ public class FileTailer<R extends IRecord> extends AbstractExecutionThreadServic
         this.fileTracker = new SourceFileTracker(this.agentContext, this.flow);
         this.minTimeBetweenFilePollsMillis = flow.minTimeBetweenFilePollsMillis();
         this.maxTimeBetweenFileTrackerRefreshMillis = flow.maxTimeBetweenFileTrackerRefreshMillis();
+        this.minRecordsProcessedBeforeSleep = flow.minRecordsProcessedBeforeSleep();
         this.metricsEmitter = new AbstractScheduledService() {
             @Override
             protected void runOneIteration() throws Exception {
@@ -114,8 +116,8 @@ public class FileTailer<R extends IRecord> extends AbstractExecutionThreadServic
     @Override
     public void run() {
         do {
-            if (0 == runOnce() && !isNewFile) {
-                // Sleep only if the previous run did not process any records
+            if (minRecordsProcessedBeforeSleep >= runOnce() && !isNewFile) {
+                // Sleep only if the previous run did work over the processed count
                 if(isRunning() && minTimeBetweenFilePollsMillis > 0) {
                     try {
                         Thread.sleep(minTimeBetweenFilePollsMillis);

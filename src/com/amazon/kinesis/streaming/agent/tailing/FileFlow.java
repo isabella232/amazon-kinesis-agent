@@ -134,7 +134,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
                 DEFAULT_MAX_TIME_BETWEEN_FILE_TRACKER_REFRESH_MILLIS);
     }
 
-    public long minRecordsProcessedBeforeSleep() {
+    public int minRecordsProcessedBeforeSleep() {
         return readInteger("minRecordsProcessedBeforeSleep", 0);
     }
 

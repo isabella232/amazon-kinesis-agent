@@ -40,7 +40,7 @@ public class MultiLineSplitter implements ISplitter {
           int length = currentPosition - startPosition;
           if (length >= 1000000) {
             if (lastPosition == -1) {
-              lastPosition = currentPosition
+              lastPosition = currentPosition;
               break;
             } else {
               buffer.position(lastPosition);

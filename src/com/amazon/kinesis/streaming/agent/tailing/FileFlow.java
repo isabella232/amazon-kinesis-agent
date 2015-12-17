@@ -103,7 +103,7 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
           if (maxLinesPerRecord == 1) {
             recordSplitter = new SingleLineSplitter();
           } else {
-            recordSplitter = new MultiLineSplitter(maxLinesPerRecord)
+            recordSplitter = new MultiLineSplitter(maxLinesPerRecord);
           }
         }
 

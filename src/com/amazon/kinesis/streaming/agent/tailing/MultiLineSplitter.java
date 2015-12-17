@@ -32,7 +32,7 @@ public class MultiLineSplitter implements ISplitter {
           int currentPosition = ByteBuffers.advanceBufferToNextLine(buffer);
           if (currentPosition == -1) {
             if (lastPosition == -1) {
-              return -1;
+              break;
             } else {
               buffer.position(lastPosition);
               break;

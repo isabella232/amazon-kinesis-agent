@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import org.slf4j.Logger;
 
 import com.amazon.kinesis.streaming.agent.ByteBuffers;
+import com.amazon.kinesis.streaming.agent.Logging;
 
 /**
  * Returns a record for several lines.

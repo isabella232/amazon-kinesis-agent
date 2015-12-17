@@ -13,7 +13,7 @@ import com.amazon.kinesis.streaming.agent.ByteBuffers;
  */
 public class MultiLineSplitter implements ISplitter {
     public static final char LINE_DELIMITER = '\n';
-    private int final maxLinesPerRecord;
+    private final int maxLinesPerRecord;
 
     public MultiLineSplitter(int maxLinesPerRecord) {
       this.maxLinesPerRecord = maxLinesPerRecord;
@@ -40,7 +40,7 @@ public class MultiLineSplitter implements ISplitter {
             if (lastPosition == -1) {
               return currentPosition;
             } else {
-              buffer.position(lastPosition)
+              buffer.position(lastPosition);
               return lastPosition;
             }
           }

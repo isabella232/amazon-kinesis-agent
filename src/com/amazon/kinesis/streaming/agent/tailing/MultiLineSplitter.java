@@ -50,7 +50,7 @@ public class MultiLineSplitter implements ISplitter {
           lastPosition = currentPosition;
         }
         if (lastPosition != -1) {
-          int length = currentPosition - startPosition;
+          int length = lastPosition - startPosition;
           LOGGER.debug("Created Record Size: {}", length);
         }
         return lastPosition;

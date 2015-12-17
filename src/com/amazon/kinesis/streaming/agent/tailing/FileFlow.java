@@ -97,14 +97,14 @@ public abstract class FileFlow<R extends IRecord> extends Configuration {
 
         String pattern = readString("multiLineStartPattern", null);
         if (Strings.isNullOrEmpty(pattern)) {
-          recordSplitter = new RegexSplitter(pattern);
-        } else {
           int maxLinesPerRecord = readInteger("maxLinesPerRecord", 1);
           if (maxLinesPerRecord == 1) {
             recordSplitter = new SingleLineSplitter();
           } else {
             recordSplitter = new MultiLineSplitter(maxLinesPerRecord);
           }
+        } else {
+          recordSplitter = new RegexSplitter(pattern);
         }
 
         String terminatorConfig = readString("truncatedRecordTerminator", DEFAULT_TRUNCATED_RECORD_TERMINATOR);

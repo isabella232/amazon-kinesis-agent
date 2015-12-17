@@ -47,6 +47,5 @@ public class MultiLineSplitter implements ISplitter {
           lastPosition = currentPosition;
         }
         return lastPosition;
-      }
     }
 }
